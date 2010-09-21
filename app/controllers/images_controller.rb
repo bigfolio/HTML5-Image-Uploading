@@ -40,9 +40,11 @@ class ImagesController < ApplicationController
   def raw
     name = "tmp_image.png"
     data = request.raw_post
-    @file_content = File.open("#{RAILS_ROOT}/tmp/#{name}", "wb") do |f| 
+    @file_content = File.open("#{Rails.root.to_s}/tmp/#{name}", "wb") do |f| 
       f.write(data)
     end
+    @image = Image.new(:attachment => File.new("#{Rails.root.to_s}/tmp/#{name}"))
+    @image.save
     render :text => 'success'    
   end
 
