@@ -1,0 +1,68 @@
+<h1>Listing images</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @images.each do |image| %>
+  <tr>
+    <td><%= image.name.blank? ? image.attachment_file_name : image.name %></td>
+    <td><%= link_to 'Show', image %></td>
+    <td><%= link_to 'Edit', edit_image_path(image) %></td>
+    <td><%= link_to 'Destroy', image, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<p><%= link_to 'New Image', new_image_path %></p>
+
+<h2>Upload using file input with "multiple" attribute</h2>
+
+<%= form_tag({:action => :create}, :multipart => true ) do |f| %>
+  <%= file_field_tag 'attachment[]', :multiple => 'multiple' %> <%= submit_tag %>
+<% end %>
+
+<h2>Drag and drop upload</h2>
+
+<div id="drop">
+  <h2>Drop Files Here</h2>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  var dropbox = document.getElementById("drop");  
+  dragEnter = function(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
+  dragExit = function(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
+  dragOver = function(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
+  drop = function(evt) {   
+    evt.stopPropagation();
+    evt.preventDefault();
+    var files = evt.dataTransfer.files;
+    var count = files.length;
+    // Only call the handler if 1 or more files was dropped.
+    if (count > 0) {
+    	// handleFiles(files);
+      var url = '/images/raw';
+      var request = new XMLHttpRequest();
+      request.open("POST",  url, true); // open asynchronous post request
+      request.send(files[0]);
+    }
+  }
+  // init event handlers
+  dropbox.addEventListener("dragenter", dragEnter, false);
+  dropbox.addEventListener("dragexit", dragExit, false);
+  dropbox.addEventListener("dragover", dragOver, false);
+  dropbox.addEventListener("drop", drop, false);
+</script>

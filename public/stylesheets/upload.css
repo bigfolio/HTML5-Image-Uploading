@@ -1,0 +1,10 @@
+#drop {
+	margin-top:20px;
+	width:200px;
+	height:200px;
+	border:2px dashed #999;
+}
+#drop h2 {
+	text-align:center;
+	color:#ccc;
+}
