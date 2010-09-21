@@ -5,6 +5,8 @@ Html5Upload::Application.routes.draw do
     end
   end
 
+  root :to => "images#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
